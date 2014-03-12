@@ -1,138 +1,106 @@
-" Activate auto filetype detection
-syntax on
-filetype plugin indent on
-filetype on
-filetype plugin on
-syntax enable
+" .vimrc file
+" Eduardo Fernandes de Conto
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
 
+" Environment {
+        set nocompatible        " must be first line : use Vim settings
+" }
 
-" eclipse elim settings
-set nocompatible
+" General {
+    " pathogen
+    call pathogen#infect()
+    call pathogen#helptags()
 
-" http://stackoverflow.com/questions/58774/how-do-you-paste-multiple-tabbed-lines-into-vi
-set pastetoggle=<F6>    " F6 toggles paste mode
-set ignorecase          " Don't care about case...
-set smartcase		" ... unless the query contains upper case characters
-set autoindent		" Enable automatic indenting for files with ft set
-set nowrap		" No fake carriage returns
-set showcmd		" Show command in statusline as it's being typed
-set showmatch		" Jump to matching bracket
-set ruler		" Show row,col %progress through file
-set laststatus=2	" Always show filename (2 is always)
-set hidden	    	" Let us move between buffers without writing them.  Don't :q! or :qa! frivolously!
-set softtabstop=4	" Vim sees 4 spaces as a tab
-set shiftwidth=4	" < and > uses spaces
-set expandtab		" Tabs mutate into spaces
-set foldmethod=indent	" Default folding
-set backspace=indent,eol,start  " Make backspace work like other editors.
-" set tabstop=4		" 4-space indents
-" set smarttab		" <TAB> width determined by shiftwidth instead of tabstop.  
-set fileencoding=utf8
-set fileencodings=utf8,cp1251
-set hlsearch            " highlight search terms
-set incsearch           " show search matches as you type
+    filetype plugin indent on   " Automatically detect file types.
+    syntax on                   " Syntax highlighting
+    set mouse=a                 " Automatically enable mouse usage
+    set history=1000            " Store a ton of history (default is 20)
+    set nospell                 " Spell checking off
+    set showcmd                 " display incomplete commands
+    " Setting up the directories {
+    set backup          " backups are nice ...
+    set undolevels=1000 "maximum number of changes that can be undone
 
-" http://nvie.com/posts/how-i-boosted-my-vim/
-set nobackup            " do not write backup and swap files
-set noswapfile
+    au BufWinLeave * silent! mkview  "make vim save view (state) (folds, cursor, etc)
+    au BufWinEnter * silent! loadview "make vim load view (state) (folds, cursor, etc)
+    " }
 
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim).
+    " Also don't do it when the mark is in the first line, that is the default
+    " position when opening a file.
+    autocmd BufReadPost *
+                \ if line("'\"") > 1 && line("'\"") <= line("$") |
+                \   exe "normal! g`\"" |
+                \ endif
+    
+    " Convenient command to see the difference between the current buffer and the
+    " file it was loaded from, thus the changes you made.
+    " Only define it when not defined already.
+    if !exists(":DiffOrig")
+        command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+                    \ | wincmd p | diffthis
+    endif
+" }
 
-au BufNewFile,BufRead *.txt setf text
-" http://go-lang.cat-v.org/text-editors/vim/
-au BufRead,BufNewFile *.go set filetype=go
-au FileType text set wrap 
+" Vim UI {
+    set cursorline " Highlight current line
+    set backspace=indent,eol,start " allow backspacing over everything in insert mode
+    set linespace=0
+    set showmatch " show matching brackets/parenthesis
+    set incsearch " find as you type search
+    set hlsearch " highlight search terms
+    set winminheight=0 " windows can be 0 line high
+    set ruler                       " show the cursor position all the time
+    set showcmd                     " show partial commands in status line 
+                                                    "   and selected characters/lines in visual mode
+    set mouse=a                     " Enable mouse usage automatically
+    set mousemodel=popup            " popup mouse model
 
+" }
 
-" abbreviate seting rus for keyboard
-abb rru set keymap=rus
-abb uuk set keymap=ukr
+" Formatting { 
+    set wrap                     " wrap long lines
+    set linebreak                " break at complete string (not in the middle of the word) 
+    set autoindent                 " indent at the same level of the previous line
+    set smartindent              " smart indenting (C-like programs,...) 
+    set shiftwidth=2             " use indents of 2 spaces
+    set expandtab                " tabs are spaces, not tabs
+    set tabstop=2                " an indentation every two columns
+    set softtabstop=2            " let backspace delete indent
+    
+    autocmd FileType text set textwidth=80 " line break at 80 caracters
+    autocmd BufRead,BufNewFile *.txt,*.tex 
+            \ set textwidth=0 wrapmargin=0 " don't line break for .txt and .tex files
+" }
 
+" Key (re)Mappings {
+    " Mapping <Esc> key to jk : quicker
+    :imap jk <Esc>
 
-" http://stackoverflow.com/questions/563616/vim-and-ctags-tips-and-tricks
-" C-\ - Open the definition in a new tab
-" A-] - Open the definition in a vertical split
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+    " Easier saving with CTRL-S
+    nmap <c-s> :w<CR>
+    imap <c-s> <Esc>:w<CR>a
 
+    " Go up/down in the visual line (wrapped line) instead of the line in the
+    "file 
+    noremap j gj
+    noremap k gk
+    
+    ",cd : change working dir to current file dir
+    nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
+" }
 
-" Evoke a web browser
-function! Browser ()
-  let line0 = getline (".")
-  let line = matchstr (line0, "http[^ >]*")
-  :if line==""
-  let line = matchstr (line0, "ftp[^ >]*")
-  :endif
-  :if line==""
-  let line = matchstr (line0, "file[^ >]*")
-  :endif
-  let line = escape (line, "#?&;|%")
-  " echo line
-  exec ":silent !google-chrome ".line
-endfunction
-
-
-" Evoke evince (pdf viewer)
-function! Evince()
-  let line = getline (".")
-  echo line
-  exec ':silent !evince ' . "\"" . line . "\""
-endfunction
-
-
-" F-keys mappings
-
-" insert current date and time
-nnoremap <F2> "=strftime("%c")<CR>P
-inoremap <F2> <C-R>=strftime("%c")<CR>
-nnoremap <F3> :call Browser ()<CR>
-nnoremap <F4> :call Evince()<CR>
-nnoremap <F5> :GundoToggle<CR>
-nmap <F8> :TagbarToggle<CR>
-nmap <F9> :NERDTreeFind<CR>
-nmap <F10> :NERDTreeToggle<CR>
-nnoremap <F12> :set go-=m go-=T go-=l go-=L go-=r go-=R go-=b go-=F<CR> :set lines=999 columns=999 <CR>
-
-
-" change local directory to file directory
-abb flcd lcd %:p:h
-
-let g:SaveUndoLevels = &undolevels
-let g:BufSizeThreshold = 1000000
-if has("autocmd")
-  " Store preferred undo levels
-  au VimEnter * let g:SaveUndoLevels = &undolevels
-  " Don't use a swap file for big files
-  au BufReadPre * if getfsize(expand("<afile>")) >= g:BufSizeThreshold | setlocal noswapfile | endif
-  " Upon entering a buffer, set or restore the number of undo levels
-  au BufEnter * if getfsize(expand("<afile>")) < g:BufSizeThreshold | let &undolevels=g:SaveUndoLevels | hi Cursor term=reverse ctermbg=black guibg=black | else | set undolevels=-1 | hi Cursor term=underline ctermbg=red guibg=red | endif
-endif
-
-set vb t_vb=
-
-set foldignore=''
-
-" Quickly edit/reload the vimrc file
-" http://nvie.com/posts/how-i-boosted-my-vim/
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
-" clear search highlighting with <leader>/
-nmap <silent> <leader>/ :nohlsearch<CR>
-
-
-" plugin settings
-
+" Plugins {
 " ctrlp
-
 let g:ctrlp_custom_ignore = {'file': '\v(\.pyc|\.swp)$'}
 
 " pyflakes
-
 " do not use quickfix with pyflakes
 let g:pyflakes_use_quickfix = 0
 
 " flake8
-
 " ignore white space of empty line warning for flake8
 let g:flake8_ignore="W293"
 let g:flake8_max_line_length=99
@@ -140,97 +108,41 @@ let g:flake8_max_line_length=99
 autocmd BufWritePost *.py call Flake8()
 
 " supertab
-
 au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 set completeopt=menuone,longest,preview
 
-" pathogen
-
-call pathogen#infect()
-call pathogen#helptags()
-
 " NERDTree
-
 " ignore in NERDTree files that end with pyc and ~
 let NERDTreeIgnore=['\.pyc$', '\~$']
 
-" solarized (it should be at the end)
+" }
 
-if has('gui_running')
-    colorscheme solarized
-    set background=light
-else
-    set background=dark
-endif
+" My Functions {
+function! InitializeDirectories()
+    let separator = "."
+    let parent = $HOME 
+    let prefix = '.vim'
+    let dir_list = { 
+                \ 'backup': 'backupdir', 
+                \ 'views': 'viewdir', 
+                \ 'swap': 'directory' }
 
-se guioptions=agim
-
-" flavored-markdown
-" https://github.com/jtratner/vim-flavored-markdown
-augroup markdown
-    au!
-    au BufNewFile,BufRead *.md,*.markdown,*.md.in setlocal filetype=ghmarkdown
-augroup END
-
-
-" Link to Spotify
-nnoremap <Leader>al :call AddLink()<CR>
-function! AddLink()
-  let url = getline (".")
-  let url = matchstr (url, "http[^ >]*")
-  if empty(url)
-    return
-  endif
-  let html = system('wget -q -O - ' . shellescape(url))
-  let regex = '\c.*head.*<title[^>]*>\_s*\zs.\{-}\ze\_s*<\/title>'
-  let regex_artist = '\cby \zs.\{-}\ze on Spotify'
-  let regex_title = '\c\zs.\{-}\ze by '
-  let url_title = substitute(matchstr(html, regex), "\n", ' ', 'g')
-  let url_title = substitute(matchstr(html, regex), "\n", ' ', 'g')
-  let title = matchstr(url_title, regex_title)
-  let artist = matchstr(url_title, regex_artist)
-  if empty(title)
-    let title = 'Unknown'
-  endif
-  exe "normal 0c$[".title." - ".artist."](".url.')'
+    for [dirname, settingname] in items(dir_list)
+        let directory = parent . '/' . prefix . dirname . "/"
+        if exists("*mkdir")
+            if !isdirectory(directory)
+                call mkdir(directory)
+            endif
+        endif
+        if !isdirectory(directory)
+            echo "Warning: Unable to create backup directory: " . directory
+            echo "Try: mkdir -p " . directory
+        else  
+            let directory = substitute(directory, " ", "\\\\ ", "")
+            exec "set " . settingname . "=" . directory
+        endif
+    endfor
 endfunction
-
-
-" URL to Markdown link
-nnoremap <Leader>ll :call AddMarkdownLink()<CR>
-function! AddMarkdownLink()
-  let url = getline (".")
-  let url = matchstr (url, "http[^ >]*")
-  if empty(url)
-    return
-  endif
-  let html = system('wget -q -O - ' . shellescape(url))
-  let regex = '\c.*head.*<title[^>]*>\_s*\zs.\{-}\ze\_s*<\/title>'
-  let url_title = substitute(matchstr(html, regex), "\n", ' ', 'g')
-  if empty(url_title)
-    let url_title = url
-  endif
-  exe "normal 0c$[".url_title."](".url.")"
-endfunction
-
-
-" abbreviate for Python pdb
-abb pdb; import pdb; pdb.set_trace()
-
-
-if has("gui_macvim")
-    source ~/.vim/mvimrc
-endif
-
-
-" open browser plugin
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
-
-" https://coderwall.com/p/nckasg
-:command WQ wq
-:command Wq wq
-:command W w
-:command Q q
+call InitializeDirectories()
+" }
