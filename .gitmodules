@@ -74,3 +74,6 @@
 [submodule "bundle/wikilink"]
 	path = bundle/wikilink
 	url = https://github.com/mmai/wikilink.git
+[submodule "bundle/vim-latex"]
+	path = bundle/vim-latex
+	url = git://git.code.sf.net/p/vim-latex/vim-latex
