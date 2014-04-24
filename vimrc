@@ -58,6 +58,12 @@
     set mouse=a                     " Enable mouse usage automatically
     set mousemodel=popup            " popup mouse model
 
+    colorscheme solarized 
+    if has('gui_running')
+      set background=light
+    else
+      set background=dark
+    endif
 " }
 
 " Formatting { 
