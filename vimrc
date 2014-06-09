@@ -60,6 +60,7 @@
 
     colorscheme solarized 
     if has('gui_running')
+      set guifont=Consolas:h13
       set background=light
     else
       set background=dark
@@ -131,6 +132,9 @@ set grepprg=grep\ -nH\ $*
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
+
+"Language-Tool
+let g:languagetool_jar = '/Users/eduardoconto/local/LanguageTool-2.5/languagetool-commandline.jar'
 " }
 
 " My Functions {
