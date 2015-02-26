@@ -57,14 +57,6 @@
                                                     "   and selected characters/lines in visual mode
     set mouse=a                     " Enable mouse usage automatically
     set mousemodel=popup            " popup mouse model
-
-    colorscheme solarized 
-    if has('gui_running')
-      set guifont=Consolas:h13
-      set background=light
-    else
-      set background=dark
-    endif
 " }
 
 " Formatting { 

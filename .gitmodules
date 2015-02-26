@@ -55,7 +55,7 @@
 	url = https://github.com/jtratner/vim-flavored-markdown.git
 [submodule "bundle/commentary"]
 	path = bundle/commentary
-	url = git://github.com/tpope/vim-commentary.git
+	url = https://github.com/tpope/vim-commentary.git
 [submodule "bundle/javascript"]
 	path = bundle/javascript
 	url = https://github.com/pangloss/vim-javascript.git
@@ -76,7 +76,7 @@
 	url = https://github.com/mmai/wikilink.git
 [submodule "bundle/vim-latex"]
 	path = bundle/vim-latex
-	url = git://git.code.sf.net/p/vim-latex/vim-latex
+	url = https://github.com/vim-latex/vim-latex.git
 [submodule "bundle/rename"]
 	path = bundle/rename
 	url = https://github.com/danro/rename.vim
