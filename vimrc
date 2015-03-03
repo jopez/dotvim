@@ -3,11 +3,11 @@
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
 
 " Environment {
-        set nocompatible        " must be first line : use Vim settings
+    set nocompatible        " must be first line : use Vim settings
 " }
 
 " General {
-    " pathogen
+    " Pathogen
     call pathogen#infect()
     call pathogen#helptags()
 
@@ -54,7 +54,7 @@
     set winminheight=0 " windows can be 0 line high
     set ruler                       " show the cursor position all the time
     set showcmd                     " show partial commands in status line 
-                                                    "   and selected characters/lines in visual mode
+                                    " and selected characters/lines in visual mode
     set mouse=a                     " Enable mouse usage automatically
     set mousemodel=popup            " popup mouse model
 " }
@@ -62,7 +62,7 @@
 " Formatting { 
     set wrap                     " wrap long lines
     set linebreak                " break at complete string (not in the middle of the word) 
-    set autoindent                 " indent at the same level of the previous line
+    set autoindent               " indent at the same level of the previous line
     set smartindent              " smart indenting (C-like programs,...) 
     set shiftwidth=2             " use indents of 2 spaces
     set expandtab                " tabs are spaces, not tabs
@@ -92,41 +92,20 @@
 " }
 
 " Plugins {
-" ctrlp
-let g:ctrlp_custom_ignore = {'file': '\v(\.pyc|\.swp)$'}
-
-" pyflakes
-" do not use quickfix with pyflakes
-let g:pyflakes_use_quickfix = 0
-
-" flake8
-" ignore white space of empty line warning for flake8
-let g:flake8_ignore="W293"
-let g:flake8_max_line_length=99
-" autorun flake8 on save
-autocmd BufWritePost *.py call Flake8()
 
 " supertab
-au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 set completeopt=menuone,longest,preview
 
 " NERDTree
 " ignore in NERDTree files that end with pyc and ~
 let NERDTreeIgnore=['\.pyc$', '\~$']
+" fix directory descending issue.
+let g:NERDTreeDirArrows=0
 
-" Latex-Suite
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
-
-"Language-Tool
-let g:languagetool_jar = '/Users/eduardoconto/local/LanguageTool-2.5/languagetool-commandline.jar'
+" Ctags search path
+" Look everywhere until root.
+set tags=./tags;
 " }
 
 " My Functions {
