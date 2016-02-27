@@ -1,0 +1,1 @@
+/remote/fr65h2/jpablo/.vim/vimrc
