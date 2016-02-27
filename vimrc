@@ -1,5 +1,5 @@
 " .vimrc file
-" Eduardo Fernandes de Conto
+" Jose Pablo Escobedo (Copy of Eduardo Fernandes de Conto)
 " vim: set foldmarker={,} foldlevel=0 foldmethod=marker:
 
 " Environment {
@@ -13,16 +13,23 @@
 
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " Syntax highlighting
-    set mouse=a                 " Automatically enable mouse usage
     set history=1000            " Store a ton of history (default is 20)
     set nospell                 " Spell checking off
     set showcmd                 " display incomplete commands
+    set smartcase               " Smart case when searching
+    set number                  " Show line number
+    set wildchar=<Tab> wildmenu wildmode=full " Convinient way to switch between buffers
+    set wildcharm=<C-Z>
+    set nofoldenable            " don't fold by default
+    set wildmode=longest,list,full " when tapping tab, do not write whole word
+    set wildmenu
+
     " Setting up the directories {
     set backup          " backups are nice ...
     set undolevels=1000 "maximum number of changes that can be undone
 
-    au BufWinLeave * silent! mkview  "make vim save view (state) (folds, cursor, etc)
-    au BufWinEnter * silent! loadview "make vim load view (state) (folds, cursor, etc)
+    au BufWinLeave .* mkview  "make vim save view (state) (folds, cursor, etc)
+    au BufWinEnter .* silent loadview "make vim load view (state) (folds, cursor, etc)
     " }
 
     " When editing a file, always jump to the last known cursor position.
@@ -45,7 +52,10 @@
 " }
 
 " Vim UI {
-    set cursorline " Highlight current line
+    set cursorline                   " highlight cursorline
+    " syntax enable
+    " set background=dark
+    " colorscheme solarized
     set backspace=indent,eol,start " allow backspacing over everything in insert mode
     set linespace=0
     set showmatch " show matching brackets/parenthesis
@@ -55,8 +65,9 @@
     set ruler                       " show the cursor position all the time
     set showcmd                     " show partial commands in status line 
                                     " and selected characters/lines in visual mode
-    set mouse=a                     " Enable mouse usage automatically
+    set mouse=a                  " Enable mouse usage automatically
     set mousemodel=popup            " popup mouse model
+    set guioptions=i                " by default, hide gui menus
 " }
 
 " Formatting { 
@@ -64,10 +75,10 @@
     set linebreak                " break at complete string (not in the middle of the word) 
     set autoindent               " indent at the same level of the previous line
     set smartindent              " smart indenting (C-like programs,...) 
-    set shiftwidth=2             " use indents of 2 spaces
+    set shiftwidth=4             " use indents of 2 spaces
     set expandtab                " tabs are spaces, not tabs
-    set tabstop=2                " an indentation every two columns
-    set softtabstop=2            " let backspace delete indent
+    set tabstop=4                " an indentation every two columns
+    set softtabstop=4            " let backspace delete indent
     
     autocmd FileType text set textwidth=80 " line break at 80 caracters
     autocmd BufRead,BufNewFile *.txt,*.tex 
@@ -89,6 +100,20 @@
     
     ",cd : change working dir to current file dir
     nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
+
+    " Run cmaps in current dir
+    map <C-F12> :!ctags -RI --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ .<CR>
+    " map <C-F12> :!ctags -IR --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+    " Wildmenu for switching buffers
+    nnoremap <F10> :b <C-Z>
+
+    " Toogle toolbar show/hide
+    map <F11> <Esc>:call ToggleGUICruft()<CR>
+
+    " Ctrl del
+    :imap <C-d> <C-[>diwi
+
 " }
 
 " Plugins {
@@ -135,4 +160,13 @@ function! InitializeDirectories()
     endfor
 endfunction
 call InitializeDirectories()
+
+function! ToggleGUICruft()
+  if &guioptions=='i'
+    exec('set guioptions=imTrL')
+  else
+    exec('set guioptions=i')
+  endif
+endfunction
 " }
+
