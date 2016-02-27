@@ -2,9 +2,12 @@ Based on
 http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/
 
 ```bash
-git clone git@bitbucket.org:eduardoconto/dotvim.git ~/.vim
+git clone https://github.com/jopez/personal git.personal
+ln -s git.personal/.vim ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 ln -s ~/.vim/gvimrc ~/.gvimrc
+
+stop here!
 cd .vim
 git submodule init
 git submodule update
