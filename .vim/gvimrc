@@ -1,5 +1,8 @@
 if system('hostname') !~ "goku"
     colorscheme evening
+else
+    colorscheme chela_light
+    "set background=light
 endif
 set guicursor=i:block-Cursor
 set smartcase               " Smart case when searching
