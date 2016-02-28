@@ -1,4 +1,7 @@
-colorscheme evening
+if system('hostname') !~ "goku"
+    colorscheme evening
+endif
+set guicursor=i:block-Cursor
 set smartcase               " Smart case when searching
 set number                  " Show line number
 

@@ -56,6 +56,11 @@
     " syntax enable
     " set background=dark
     " colorscheme solarized
+    if system('hostname') !~ "goku"
+        colorscheme evening
+    else
+        colorscheme morning
+    endif
     set backspace=indent,eol,start " allow backspacing over everything in insert mode
     set linespace=0
     set showmatch " show matching brackets/parenthesis
@@ -68,6 +73,7 @@
     set mouse=a                  " Enable mouse usage automatically
     set mousemodel=popup            " popup mouse model
     set guioptions=i                " by default, hide gui menus
+     
 " }
 
 " Formatting { 
