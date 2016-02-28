@@ -68,7 +68,7 @@ hi linenr       guibg=#fafafa   guifg=#828282   gui=none
 
 hi matchparen   guibg=#cccccc                   gui=none
 
-hi modemsg      guibg=#fafafa   guifg=#999999   gui=none
+hi modemsg      guibg=#fafafa   guifg=#545454   gui=none
 
 hi moremsg      guibg=#339900   guifg=#ffffff   gui=none
 
