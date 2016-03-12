@@ -149,6 +149,11 @@ command! -nargs=1 SetIndent call SetIndent(<f-args>)
     " syntax enable
     " set background=dark
     " colorscheme solarized
+    if system('hostname') !~ "goku"
+        colorscheme evening
+    else
+        colorscheme morning
+    endif
     set backspace=indent,eol,start " allow backspacing over everything in insert mode
     set linespace=0
     set showmatch " show matching brackets/parenthesis
