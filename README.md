@@ -2,8 +2,8 @@ Based on
 http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/
 
 ```bash
-git clone https://github.com/jopez/personal git.personal
-ln -s git.personal/.vim ~/.vim
+git clone https://github.com/jopez/dotvim dotvim
+ln -s dotvim ~/.vim
 ln -s ~/.vim/vimrc ~/.vimrc
 ln -s ~/.vim/gvimrc ~/.gvimrc
 
