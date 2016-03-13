@@ -2,6 +2,7 @@
 "
 " Maintainer:   Stefan Karlsson <stefan.74@comhem.se>
 " Last Change:  8 August 2006
+" Modified by: Jose Pablo Escobedo
 
 
 set background=light
@@ -34,9 +35,9 @@ hi specialchar  guibg=#fafafa   guifg=#cc2222   gui=underline
 
 hi underlined   guibg=#fafafa   guifg=#2222ff   gui=underline
 
-hi error        guibg=#ff2222   guifg=#ffffff   gui=none
+hi error        guibg=#f4fc00   guifg=#e302e3   gui=none
 
-hi todo         guibg=#339933   guifg=#ffffff   gui=none
+hi todo         guibg=#339933   guifg=#f0f04f   gui=none
 
 
 "General Groups ============================================
@@ -44,7 +45,7 @@ hi todo         guibg=#339933   guifg=#ffffff   gui=none
 hi cursor       guibg=#000000   guifg=#ffffff   gui=none
 "  cursorim?
 hi cursorcolumn guibg=#eeeeee                   gui=none
-hi cursorline   guibg=#eeeeee                   gui=none
+hi cursorline   guibg=#fffd91                   gui=none
 
 hi directory    guibg=#fafafa   guifg=#2222ff   gui=none
 
@@ -53,7 +54,7 @@ hi diffchange   guibg=#ffff00   guifg=#cccc99   gui=none
 hi diffdelete   guibg=#ff6666   guifg=#ff6666   gui=none
 hi difftext     guibg=#ffff00   guifg=#000000   gui=none
 
-hi errormsg     guibg=#ff2222   guifg=#ffffff   gui=none
+hi errormsg     guibg=#2b8707   guifg=#f0f04f   gui=none
 
 hi vertsplit    guibg=#2222ff   guifg=#2222ff   gui=none
 
@@ -66,11 +67,11 @@ hi incsearch    guibg=#ffbb00   guifg=#000000   gui=none
 
 hi linenr       guibg=#fafafa   guifg=#828282   gui=none
 
-hi matchparen   guibg=#cccccc                   gui=none
-
+hi matchparen   guibg=#babbff                   gui=none
+"cccccc
 hi modemsg      guibg=#fafafa   guifg=#545454   gui=none
 
-hi moremsg      guibg=#339900   guifg=#ffffff   gui=none
+hi moremsg      guibg=#339900   guifg=#f0f04f   gui=none
 
 hi nontext      guibg=#fafafa   guifg=#999999   gui=none
 
@@ -81,7 +82,7 @@ hi pmenusel     guibg=#2222ff   guifg=#ffffff   gui=none
 "  pmenusbar?
 "  pmenuthumb?
 
-hi question     guibg=#339900   guifg=#ffffff   gui=none
+hi question     guibg=#339900   guifg=#f0f04f   gui=none
 
 hi search       guibg=#ffff00   guifg=#000000   gui=none
 
@@ -104,7 +105,7 @@ hi title        guibg=#fafafa   guifg=#6666ff   gui=none
 hi visual       guibg=#cccccc   guifg=#333333   gui=none
 "  visualnos?
 
-hi warningmsg   guibg=#fafafa   guifg=#ff0000   gui=none
+hi warningmsg   guibg=#fc6900   guifg=#0060fc   gui=none
 
 hi wildmenu     guibg=#339900   guifg=#ffffff   gui=none
 
